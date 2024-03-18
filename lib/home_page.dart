@@ -22,7 +22,6 @@ class _HomePageState extends State<HomePage> {
           ),
           onTap: () {
 
-            
           },
           leading: Image.asset("images/icons/${e["icon"]}"),
         );
