@@ -31,11 +31,15 @@ class _HomePageState extends State<HomePage> {
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
           ),
           onTap: () {
-            Navigator.pushNamed(context, e["page"]??"");
+            Navigator.pushNamed(context, e["page"] ?? "");
           },
           leading: Image.asset("images/icons/${e["icon"]}"),
         );
       }).toList()),
+      body: Center(child: Text("No Resumes + Create new resume.")),
+      floatingActionButton: FloatingActionButton(onPressed: () {
+
+      },child: Icon(Icons.add),),
       // drawerScrimColor: Colors.red,
     );
   }
