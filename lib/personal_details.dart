@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
+import 'package:resume_builder_new/util.dart';
 
 class PersonalDetails extends StatefulWidget {
   const PersonalDetails({super.key});
@@ -10,7 +11,11 @@ class PersonalDetails extends StatefulWidget {
 }
 
 class _PersonalDetailsState extends State<PersonalDetails> {
-   int index=0;
+  int index = 0;
+
+  GlobalKey<FormState> fKey = GlobalKey<FormState>();
+  String userName="";
+  String email="";
 
   @override
   Widget build(BuildContext context) {
@@ -27,10 +32,8 @@ class _PersonalDetailsState extends State<PersonalDetails> {
               Expanded(
                 child: InkWell(
                   onTap: () {
-                    index=0;
-                    setState(() {
-
-                    });
+                    index = 0;
+                    setState(() {});
                   },
                   child: Container(
                     padding: EdgeInsets.all(10),
@@ -44,12 +47,10 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                 ),
               ),
               Expanded(
-                child:  InkWell(
+                child: InkWell(
                   onTap: () {
-                    index=1;
-                    setState(() {
-
-                    });
+                    index = 1;
+                    setState(() {});
                   },
                   child: Container(
                     padding: EdgeInsets.all(10),
@@ -72,78 +73,121 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(10),
                         boxShadow: [BoxShadow(color: Colors.grey, blurRadius: 5, spreadRadius: 2)]),
-                    child: Column(
-                      children: [
-                        Row(
-                          children: [
-                            Icon(Icons.person),
-                            Expanded(
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: TextField(
+                    child: Form(
+                      key: fKey,
+                      child: Column(
+                        children: [
+                          Row(
+                            children: [
+                              Icon(Icons.person),
+                              Expanded(
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: TextFormField(
                                       decoration: InputDecoration(
                                         hintText: "Name",
-                                      )),
-                                )),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Row(
-                          children: [
-                            Icon(Icons.email),
-                            Expanded(
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: TextField(
-                                    decoration: InputDecoration(
-                                      hintText: "Email",
+                                      ),
+                                      validator: (val) {
+                                        if (val!.isEmpty) {
+                                          return "Please Enter your Name";
+                                        } else {
+                                          return null;
+                                        }
+                                      },
+                                      onChanged: (val) {
+                                        userName=val;
+                                        print("===> $val");
+                                      },
                                     ),
-                                    obscureText: true,
-                                    keyboardType: TextInputType.emailAddress,
-                                  ),
-                                )),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Row(
-                          children: [
-                            Icon(Icons.phone_android),
-                            Expanded(
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: TextField(
-                                    decoration: InputDecoration(hintText: "Phone"),
-                                    keyboardType: TextInputType.phone,
-                                  ),
-                                )),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Icon(Icons.location_on_outlined),
-                            SizedBox(width: 10,),
-                            Expanded(
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Column(
-                                    children: [
-                                      TextField(),
-                                      TextField(),
-                                      TextField(),
-                                    ],
-                                  ),
-                                )),
-                          ],
-                        ),
-                      ],
+                                  )),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Row(
+                            children: [
+                              Icon(Icons.email),
+                              Expanded(
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: TextFormField(
+                                      decoration: InputDecoration(labelText: "Email"),
+                                      // obscureText: true,
+                                      keyboardType: TextInputType.emailAddress,
+                                      keyboardAppearance: Brightness.dark,
+                                      onFieldSubmitted: (value) {
+                                        print(value);
+                                      },
+                                      validator: (val) {
+                                        if (val!.isEmpty) {
+                                          return "Please Enter Your Email Address";
+                                        } else if (!val.contains("@") || !val.contains(".com")) {
+                                          return "Please Enter Valid Email Address";
+                                        }
+                                        else {
+                                          return null;
+                                        }
+                                      },
+                                      onChanged: (value) {
+                                        email=value;
+                                      },
+                                    ),
+                                  )),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Row(
+                            children: [
+                              Icon(Icons.phone_android),
+                              Expanded(
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: TextField(
+                                      decoration: InputDecoration(hintText: "Phone"),
+                                      keyboardType: TextInputType.phone,
+                                    ),
+                                  )),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Icon(Icons.location_on_outlined),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              Expanded(
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Column(
+                                      children: [
+                                        TextField(),
+                                        TextField(),
+                                        TextField(),
+                                      ],
+                                    ),
+                                  )),
+                            ],
+                          ),
+                          ElevatedButton(
+                              onPressed: () {
+                                bool isValid = fKey.currentState?.validate() ?? false;
+                                print("name ==> $userName");
+                                print("email ==> $email");
+                                if (isValid) {
+                                  resume.name =userName;
+                                  resume.email =email;
+                                }
+                              },
+                              child: Text("Save"))
+                        ],
+                      ),
                     ),
                   ),
                 ),

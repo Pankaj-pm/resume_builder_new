@@ -1,3 +1,5 @@
+import 'package:resume_builder_new/my_resume.dart';
+
 List<Map> buildOption = [
   {
     "icon": "contact-books.png",
@@ -55,3 +57,5 @@ List<Map> buildOption = [
     "page": "personalDetailsee",
   },
 ];
+
+MyResume resume=MyResume();
