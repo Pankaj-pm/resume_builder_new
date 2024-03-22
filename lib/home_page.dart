@@ -24,22 +24,41 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: Colors.red,
       ),
       drawer: NavigationDrawer(
-          children: buildOption.map((e) {
-        return ListTile(
-          title: Text(
-            e["name"],
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+        children: [
+          DrawerHeader(
+            decoration: BoxDecoration(color: Colors.red),
+            padding: EdgeInsets.zero,
+            margin: EdgeInsets.zero,
+            child: Text("ghjuads"),
           ),
-          onTap: () {
-            Navigator.pushNamed(context, e["page"] ?? "");
-          },
-          leading: Image.asset("images/icons/${e["icon"]}"),
-        );
-      }).toList()),
+          Container(
+            child: Text(
+              "Build",
+              style: TextStyle(color: Colors.white),
+            ),
+            color: Colors.red,
+            alignment: Alignment.center,
+            padding: EdgeInsets.all(10),
+          ),
+          ...buildOption.map((e) {
+            return ListTile(
+              title: Text(
+                e["name"],
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+              ),
+              onTap: () {
+                Navigator.pushNamed(context, e["page"] ?? "");
+              },
+              leading: Image.asset("images/icons/${e["icon"]}"),
+            );
+          }).toList()
+        ],
+      ),
       body: Center(child: Text("No Resumes + Create new resume.")),
-      floatingActionButton: FloatingActionButton(onPressed: () {
-
-      },child: Icon(Icons.add),),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        child: Icon(Icons.add),
+      ),
       // drawerScrimColor: Colors.red,
     );
   }
