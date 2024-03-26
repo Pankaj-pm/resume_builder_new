@@ -1,6 +1,9 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:resume_builder_new/util.dart';
 
 class PersonalDetails extends StatefulWidget {
@@ -16,13 +19,16 @@ class _PersonalDetailsState extends State<PersonalDetails> {
   GlobalKey<FormState> fKey = GlobalKey<FormState>();
   String userName = "";
   String email = "";
+  bool isVisible = true;
+  String? xFile;
 
-  TextEditingController emailController=TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
-    emailController.text=resume.email??"";
+    emailController.text = resume.email ?? "";
   }
 
   @override
@@ -92,10 +98,16 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                                   child: Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: TextFormField(
-                                  // initialValue: resume.name,
-                                  controller: emailController,
+                                  initialValue: resume.name,
+                                  // controller: emailController,
+                                  maxLines: 3,
                                   decoration: InputDecoration(
                                     hintText: "Name",
+                                    labelText: "Name",
+                                    border: OutlineInputBorder(),
+                                    contentPadding: EdgeInsets.all(10),
+                                    errorBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.black)),
+                                    focusedErrorBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.black)),
                                   ),
                                   validator: (val) {
                                     if (val!.isEmpty) {
@@ -154,6 +166,41 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                           ),
                           Row(
                             children: [
+                              Icon(Icons.password),
+                              Expanded(
+                                  child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: TextFormField(
+                                  controller: passController,
+                                  decoration: InputDecoration(
+                                    labelText: "Password",
+                                    suffixIcon: InkWell(
+                                      onTap: () {
+                                        isVisible = !isVisible;
+                                        setState(() {});
+                                      },
+                                      child: Icon(Icons.remove_red_eye),
+                                    ),
+                                    // suffix: Icon(Icons.remove_red_eye),
+                                  ),
+                                  obscureText: isVisible,
+                                  keyboardType: TextInputType.emailAddress,
+                                  keyboardAppearance: Brightness.dark,
+                                  onFieldSubmitted: (value) {
+                                    print("onFieldSubmitted $value");
+                                  },
+                                  onChanged: (value) {
+                                    email = value;
+                                  },
+                                ),
+                              )),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Row(
+                            children: [
                               Icon(Icons.phone_android),
                               Expanded(
                                   child: Padding(
@@ -161,9 +208,7 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                                 child: TextField(
                                   decoration: InputDecoration(hintText: "Phone"),
                                   keyboardType: TextInputType.phone,
-                                  onSubmitted: (value) {
-
-                                  },
+                                  onSubmitted: (value) {},
                                 ),
                               )),
                             ],
@@ -205,14 +250,15 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                                 child: ElevatedButton(
                                     onPressed: () {
                                       bool isValid = fKey.currentState?.validate() ?? false;
-                                      print("name ==> $userName");
-                                      print("email ==> $email");
-                                      print("email ==> ${emailController.text}");
+
                                       if (isValid) {
                                         resume.name = userName;
                                         resume.email = email;
                                         fKey.currentState?.save();
                                         FocusScope.of(context).unfocus();
+                                        ScaffoldMessenger.of(context).showSnackBar(
+                                          SnackBar(content: Text("Saved")),
+                                        );
                                       }
                                     },
                                     child: Text("Save")),
@@ -223,8 +269,11 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                               Expanded(
                                 child: ElevatedButton(
                                     onPressed: () {
-                                      emailController.text="new Text";
-                                      fKey.currentState?.reset();
+                                      emailController.text = "new Text";
+                                      emailController.text = "";
+                                      emailController.clear();
+
+                                      // fKey.currentState?.reset();
                                     },
                                     child: Text("Reset")),
                               ),
@@ -247,13 +296,40 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                   child: Center(
                     child: Stack(
                       children: [
-                        CircleAvatar(radius: 60, backgroundColor: Colors.grey),
+                        CircleAvatar(
+                          radius: 60,
+                          backgroundColor: Colors.grey,
+                          backgroundImage: FileImage(File(xFile ?? "")),
+                        ),
                         Positioned(
                           bottom: 10,
                           right: 10,
-                          child: Container(
-                            decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.blue),
-                            child: Icon(Icons.add),
+                          child: InkWell(
+                            onTap: () async {
+                              XFile? file = await ImagePicker().pickImage(source: ImageSource.camera);
+                              xFile = file?.path ?? "";
+                              setState(() {});
+                              print("image");
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.blue),
+                              child: Icon(Icons.camera_alt),
+                            ),
+                          ),
+                        ),
+                        Positioned(
+                          bottom: 10,
+                          child: InkWell(
+                            onTap: () async {
+                              XFile? file = await ImagePicker().pickImage(source: ImageSource.gallery);
+                              xFile = file?.path ?? "";
+                              setState(() {});
+                              print("image");
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.blue),
+                              child: Icon(Icons.photo),
+                            ),
                           ),
                         ),
                       ],
