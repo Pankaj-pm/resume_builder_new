@@ -29,7 +29,7 @@ List<Map> buildOption = [
   {
     "icon": "open-cardboard-box.png",
     "name": "Technical Skills",
-    "page": "personalDetails",
+    "page": "technicalSkills",
   },
   {
     "icon": "open-book.png",

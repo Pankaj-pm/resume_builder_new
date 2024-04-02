@@ -54,9 +54,28 @@ class _HomePageState extends State<HomePage> {
           }).toList()
         ],
       ),
-      body: Center(child: Text("No Resumes + Create new resume.")),
+      body: Column(
+        children: [
+          Text(
+            "personal Detail",
+            style: TextStyle(fontSize: 23),
+          ),
+          Text("Name = ${resume.name}"),
+          Text(
+            "My Skill",
+            style: TextStyle(fontSize: 23),
+          ),
+          Column(
+            children: resume.mySkill.map((e) => Text("$e")).toList(),
+          )
+        ],
+      ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          setState(() {
+
+          });
+        },
         child: Icon(Icons.add),
       ),
       // drawerScrimColor: Colors.red,

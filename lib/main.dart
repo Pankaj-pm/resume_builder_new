@@ -5,6 +5,7 @@ import 'package:resume_builder_new/contact_page.dart';
 import 'package:resume_builder_new/home_page.dart';
 import 'package:resume_builder_new/personal_details.dart';
 import 'package:resume_builder_new/splash_screen.dart';
+import 'package:resume_builder_new/technical_skills.dart';
 
 void main() {
   runApp(MyApp());
@@ -28,7 +29,8 @@ class _MyAppState extends State<MyApp> {
         "/": (context) => SplashScreen(),
         "home": (context) => HomePage(),
         "contactInfo": (context) => ContactPage(),
-        "personalDetails": (context) => PersonalDetails()
+        "personalDetails": (context) => PersonalDetails(),
+        "technicalSkills": (context) => TechnicalSkills()
       },
       onUnknownRoute: (settings) {
         return MaterialPageRoute(

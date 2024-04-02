@@ -7,5 +7,7 @@ class MyResume{
   String? address2;
   String? address3;
 
+  List<String> mySkill=[];
+
 
 }
