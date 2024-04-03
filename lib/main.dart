@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:resume_builder_new/contact_page.dart';
 import 'package:resume_builder_new/home_page.dart';
+import 'package:resume_builder_new/my_pdf.dart';
 import 'package:resume_builder_new/personal_details.dart';
 import 'package:resume_builder_new/splash_screen.dart';
 import 'package:resume_builder_new/technical_skills.dart';
@@ -30,7 +31,8 @@ class _MyAppState extends State<MyApp> {
         "home": (context) => HomePage(),
         "contactInfo": (context) => ContactPage(),
         "personalDetails": (context) => PersonalDetails(),
-        "technicalSkills": (context) => TechnicalSkills()
+        "technicalSkills": (context) => TechnicalSkills(),
+        "myPdf": (context) => MyPdf()
       },
       onUnknownRoute: (settings) {
         return MaterialPageRoute(

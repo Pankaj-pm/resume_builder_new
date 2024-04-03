@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:resume_builder_new/my_pdf.dart';
 import 'package:resume_builder_new/util.dart';
 
 class HomePage extends StatefulWidget {
@@ -60,21 +61,40 @@ class _HomePageState extends State<HomePage> {
             "personal Detail",
             style: TextStyle(fontSize: 23),
           ),
-          Text("Name = ${resume.name}"),
+          Text(
+            "Name = ${resume.name}",
+            style: TextStyle(fontSize: 18),
+          ),
+          Text(
+            "Email = ${resume.name}",
+            style: TextStyle(fontSize: 18),
+          ),
+          Text(
+            "Phone = ${resume.name}",
+            style: TextStyle(fontSize: 18),
+          ),
+          Text(
+            "Address = ${resume.address1} ${resume.address2} ${resume.address3}",
+            style: TextStyle(fontSize: 18),
+          ),
           Text(
             "My Skill",
             style: TextStyle(fontSize: 23),
           ),
           Column(
             children: resume.mySkill.map((e) => Text("$e")).toList(),
-          )
+          ),
+
         ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          setState(() {
+          setState(() {});
+          // Navigator.push(context, MaterialPageRoute(builder: (context) {
+          //   return MyPdf();
+          // },));
 
-          });
+          Navigator.pushNamed(context, "myPdf");
         },
         child: Icon(Icons.add),
       ),
